@@ -63,4 +63,10 @@ public class TestCalculator {
 		double answer = Calculator.RPNtoAnswer(Calculator.expressionToRPN("(24 + 12 * 2) * 52"));
 		assertEquals(2496, answer);
 	}
+
+	@Test
+	void testRPNtoAnswer_5() {
+		double answer = Calculator.RPNtoAnswer(Calculator.expressionToRPN("2 - 3"));
+		assertEquals(-1, answer);
+	}
 }

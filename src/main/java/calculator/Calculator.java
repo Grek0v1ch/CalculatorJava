@@ -59,13 +59,13 @@ public class Calculator {
 				double a = stack.pop(), b = stack.pop();
 
 				if (rpn.charAt(i) == '+')
-					stack.push(a + b);
+					stack.push(b + a);
 				if (rpn.charAt(i) == '-')
-					stack.push(a - b);
+					stack.push(b - a);
 				if (rpn.charAt(i) == '*')
-					stack.push(a * b);
+					stack.push(b * a);
 				if (rpn.charAt(i) == '/')
-					stack.push(a / b);
+					stack.push(b / a);
 			}
 		}
 		return stack.pop();

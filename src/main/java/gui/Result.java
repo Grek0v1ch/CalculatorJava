@@ -1,6 +1,10 @@
 package gui;
 
+import calculator.Calculator;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Result extends JButton {
 
@@ -15,5 +19,17 @@ public class Result extends JButton {
 		setBounds(SPACE_SIZE + (BUTTON_SIZE + SPACE_SIZE) * 2,
 						 SPACE_SIZE + (BUTTON_SIZE + SPACE_SIZE) * 4,
 						 BUTTON_SIZE, BUTTON_SIZE);
+		addActionWithTExtField(output);
+	}
+
+	private void addActionWithTExtField(JTextField output) {
+		ActionListener l = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				double result = Calculator.RPNtoAnswer(Calculator.expressionToRPN(output.getText()));
+				output.setText(Integer.toString((int)result));
+			}
+		};
+		addActionListener(l);
 	}
 }

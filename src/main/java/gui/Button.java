@@ -61,7 +61,8 @@ public class Button extends JButton {
 						output.setText(output.getText() + button.getText());
 					return;
 				}
-				if (Character.isSpaceChar(output.getText().charAt(output.getText().length() - 1))) {
+				if (output.getText().length() == 0 ||
+					Character.isSpaceChar(output.getText().charAt(output.getText().length() - 1))) {
 					if (button.getText().length() == MATH_OPERATION)
 						return;
 				}
