@@ -26,8 +26,11 @@ public class Result extends JButton {
 		ActionListener l = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				double result = Calculator.RPNtoAnswer(Calculator.expressionToRPN(output.getText()));
-				output.setText(Integer.toString((int)result));
+				double result = Calculator.calculateAnswer(output.getText());
+				if (result < 0)
+					output.setText(" - " + Math.abs((int)result));
+				else
+					output.setText(Integer.toString((int)result));
 			}
 		};
 		addActionListener(l);

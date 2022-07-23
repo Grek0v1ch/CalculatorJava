@@ -3,6 +3,10 @@ package calculator;
 import java.util.Stack;
 
 public class Calculator {
+	public static double calculateAnswer(String exp) {
+		return RPNtoAnswer(expressionToRPN(exp));
+	}
+
 	public static String expressionToRPN(String exp) {
 		StringBuilder current = new StringBuilder();
 		Stack<Character> stack = new Stack<>();
