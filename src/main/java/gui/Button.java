@@ -56,11 +56,8 @@ public class Button extends JButton {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JButton button = (JButton) e.getSource();
-				if (output.getText().length() == 0 && button.getText().length() == MATH_OPERATION) {
-					if (button.getText().equals(" - "))
-						output.setText(output.getText() + button.getText());
+				if (output.getText().length() == 0 && button.getText().length() == MATH_OPERATION)
 					return;
-				}
 				if (output.getText().length() == 0 ||
 					Character.isSpaceChar(output.getText().charAt(output.getText().length() - 1))) {
 					if (button.getText().length() == MATH_OPERATION)
