@@ -9,80 +9,67 @@ public class Calculator {
 
 	public static String expressionToRPN(String exp) {
 		StringBuilder current = new StringBuilder();
-		Stack<Character> stack = new Stack<>();
+		Stack<String> stack = new Stack<>();
+		String[] data = exp.split(" ");
 
-		int priority = 0;
-		for (int i = 0; i < exp.length(); i++) {
-			if (Character.isSpaceChar(exp.charAt(i)))
-				continue;
-			priority = getPriority(exp.charAt(i));
+		int priority;
+		for (String item : data) {
+			priority = getPriority(item);
 			if (priority == 0)
-				current.append(exp.charAt(i));
+				current.append(item).append(' ');
 			if (priority == 1)
-				stack.push(exp.charAt(i));
+				stack.push(item);
 			if (priority > 1) {
-				current.append(' ');
 				while (! stack.empty()) {
 					if (getPriority(stack.peek()) >= priority)
-						current.append(stack.pop());
+						current.append(stack.pop()).append(' ');
 					else
 						break;
 				}
-				stack.push(exp.charAt(i));
+				stack.push(item);
 			}
 			if (priority == -1) {
-				current.append(' ');
 				while (getPriority(stack.peek()) != 1)
-					current.append(stack.pop());
+					current.append(stack.pop()).append(' ');
 				stack.pop();
 			}
-
 		}
-		current.append(' ');
 		while (! stack.empty())
-			current.append(stack.pop());
-		return current.toString();
+			current.append(stack.pop()).append(' ');
+		return current.substring(0, current.length() - 1);
 	}
 
 	public static double RPNtoAnswer(String rpn) {
-		StringBuilder operand = new StringBuilder();
 		Stack<Double> stack = new Stack<>();
-		for (int i = 0; i < rpn.length(); i++) {
-			if (Character.isSpaceChar(rpn.charAt(i)))
-				continue;
-			if (getPriority(rpn.charAt(i)) == 0) {
-				while (! Character.isSpaceChar(rpn.charAt(i)) && getPriority(rpn.charAt(i)) == 0) {
-					operand.append(rpn.charAt(i++));
-					if (i == rpn.length())
-						break;
-				}
-				stack.push(Double.parseDouble(operand.toString()));
-				operand = new StringBuilder();
-			}
-			if (getPriority(rpn.charAt(i)) > 1) {
+		String[] data = rpn.split(" ");
+
+		for (String item : data) {
+			if (getPriority(item) == 0)
+				stack.push(Double.parseDouble(item));
+			if (getPriority(item) > 1) {
 				double a = stack.pop(), b = stack.pop();
 
-				if (rpn.charAt(i) == '+')
-					stack.push(b + a);
-				if (rpn.charAt(i) == '-')
-					stack.push(b - a);
-				if (rpn.charAt(i) == '*')
-					stack.push(b * a);
-				if (rpn.charAt(i) == '/')
-					stack.push(b / a);
+				switch (item) {
+					case "+" -> stack.push(b + a);
+					case "-" -> stack.push(b - a);
+					case "*" -> stack.push(b * a);
+					case "/" -> stack.push(b / a);
+				}
 			}
 		}
 		return stack.pop();
 	}
 
-	private static int getPriority(Character token) {
-		if (token == '*' || token == '/')
+	public static int getPriority(String token) {
+		if (token.length() > 1)
+			return 0;
+		if (token.equals("*") || token.equals("/"))
 			return 3;
-		if (token == '+' || token == '-')
+		if (token.equals("+") || token.equals("-"))
 			return 2;
-		if (token == '(')
+		if (token.equals("("))
 			return 1;
-		if (token == ')')
+		if (token.equals(")"))
 			return -1;
 		return 0;
 	}
